@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, request
 from flask_restful import Api
 from flask_jwt import JWT
@@ -12,7 +14,7 @@ import datetime
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 app.config['JWT_EXPIRATION_DELTA'] =datetime.timedelta(seconds=600) 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db' 
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environment.get('DATABASE_URL','sqlite:///data.db') 
 
 app.secret_key = 'jose'
 api = Api(app)
